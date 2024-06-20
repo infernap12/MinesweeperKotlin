@@ -9,7 +9,7 @@ class Board(size: Int, mines: Int) {
                 .distinct()
                 .take(mines)
                 .forEach { (y, x) ->
-                    grid[y][x] = 'x'
+                    grid[y][x] = 'X'
                 }
         }
 
