@@ -3,7 +3,10 @@ package minesweeper
 
 fun main() {
     println("How many mines do you want on the field?")
-    println(Board(9, readInt()))
+    val board = Board(9, readInt())
+//    board.printGrid()
+//    println()
+    board.printHint()
 }
 
 fun readInt(): Int {

@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$hs.kotlin.version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10"
     }
 }
 
@@ -77,5 +77,5 @@ configure(subprojects.findAll {it.name != 'util'}) {
 }
 
 wrapper {
-    gradleVersion = hs.gradle.version
+    gradleVersion = "8.5"
 }
