@@ -10,7 +10,7 @@ const val FOG = '.'
 
 class Board(private val size: Int, val mines: Int, private val random: Random = Random.Default) {
 
-    // todo solve the init on free issue
+
     private var haveStepped: Boolean = false
     private val grid: List<MutableList<Char>> = List(size) { MutableList(size) { '/' } }
 
@@ -34,7 +34,6 @@ class Board(private val size: Int, val mines: Int, private val random: Random = 
 
     val fogGrid: List<MutableList<Char>> = List(grid.size) { MutableList(grid.size) { '.' } }
 
-    // todo print String needs work if we're to work with sizes above 9
     private fun listToString(list: List<MutableList<Char>>): String = list.withIndex()
         .joinToString(
             "\n",
@@ -88,13 +87,18 @@ class Board(private val size: Int, val mines: Int, private val random: Random = 
      */
     fun clear(coord: Coord) {
         if (haveStepped) return
+        if (!Status().initialised) initGrid(coord)
         when (grid[coord]) {
             MINE -> {
                 haveStepped = true // use some kind of board.revealMine // fail route
+                loseReveal()
                 return
             }
 
-            CLEAR -> getNeighbours(coord).forEach(::clear)
+            CLEAR -> {
+                fogGrid[coord] = grid[coord]
+                getNeighbours(coord).forEach(::clear)
+            }
 
             in '1'..'9' -> {
                 fogGrid[coord] = grid[coord]
@@ -102,6 +106,10 @@ class Board(private val size: Int, val mines: Int, private val random: Random = 
         }
 
 
+    }
+
+    private fun loseReveal() {
+        grid.indices.flatMap { y -> grid.indices.map { x -> Coord(y, x) } }.forEach { if (grid[it] == MINE) fogGrid[it] = MINE }
     }
 
     /**
