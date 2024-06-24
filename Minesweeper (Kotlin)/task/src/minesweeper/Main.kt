@@ -1,16 +1,17 @@
 package minesweeper
 
 
+
 fun main() {
     println("How many mines do you want on the field?")
     val board = Board(9, readInt())
 //    board.printGrid()
 //    println()
-    board.printHint()
+    board.printGrid()
     while (!board.Status().hasWon) {
         println("Set/delete mine marks (x and y coordinates):")
-        board.setDel(readCoord())
-        board.printHint()
+        board.mark(readCoord())
+        board.printGrid()
     }
     println("Congratulations! You found all the mines!")
 }
@@ -38,4 +39,12 @@ fun readCoord(): Coord {
             println("Numbers please")
         } else return coord
     }
+}
+
+operator fun <T> List<MutableList<T>>.get(coord: Coord): T {
+    return this[coord.y][coord.x]
+}
+
+operator fun <T> List<MutableList<T>>.set(coord: Coord, value: T) {
+    this[coord.y][coord.x] = value
 }

@@ -1,22 +1,24 @@
 package minesweeper
 
-class Coord(y: Int, x: Int, userInpt: Boolean = false) {
+data class Coord(private val coordY: Int, private val coordX: Int, private val userInpt: Boolean = false) {
+
+    constructor(pair: Pair<Int, Int>) : this(pair.first, pair.second)
 
     val y: Int
     val x: Int
     val userY
-        get() = y + 1
+        get() = coordY + 1
     val userX
-        get() = x + 1
+        get() = coordX + 1
 
 
     init {
         if (userInpt) {
-            this.y = y - 1
-            this.x = x - 1
+            this.y = coordY - 1
+            this.x = coordX - 1
         } else {
-            this.y = y
-            this.x = x
+            this.y = coordY
+            this.x = coordX
         }
     }
 }
