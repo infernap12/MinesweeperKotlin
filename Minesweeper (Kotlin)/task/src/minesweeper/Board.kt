@@ -48,7 +48,6 @@ class Board(private val size: Int, val mines: Int, private val random: Random = 
             )
         }
 
-    // todo test and impl optimised version
     private fun countNeighbourMines(coord: Coord): Int? {
         if (grid[coord.y][coord.x] == 'X') return null
         //verbose impl
