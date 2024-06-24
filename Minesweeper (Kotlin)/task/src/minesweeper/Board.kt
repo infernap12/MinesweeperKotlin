@@ -24,10 +24,10 @@ class Board(private val size: Int, val mines: Int, private val random: Random = 
                 grid[it] = MINE
             }
         grid.indices.flatMap { y -> grid.indices.map { x -> Coord(y, x) } }
-            .forEach { coord ->
-                countNeighbourMines(coord)
+            .forEach { location ->
+                countNeighbourMines(location)
                     ?.digitToChar()
-                    ?.let { grid[coord] = it }
+                    ?.let { grid[location] = it }
             }
     }
 
@@ -109,7 +109,8 @@ class Board(private val size: Int, val mines: Int, private val random: Random = 
     }
 
     private fun loseReveal() {
-        grid.indices.flatMap { y -> grid.indices.map { x -> Coord(y, x) } }.forEach { if (grid[it] == MINE) fogGrid[it] = MINE }
+        grid.indices.flatMap { y -> grid.indices.map { x -> Coord(y, x) } }
+            .forEach { if (grid[it] == MINE) fogGrid[it] = MINE }
     }
 
     /**
@@ -132,13 +133,13 @@ class Board(private val size: Int, val mines: Int, private val random: Random = 
             .filter { it != coord }
     }
 
-    inner class Status() {
+    inner class Status {
         // Stored
-        val falseNegatives: Int // missed mines
-        val falsePositives: Int // falsely flagged as mine
+        private val falseNegatives: Int // missed mines
+        private val falsePositives: Int // falsely flagged as mine
 
         // inferred
-        val correct: Int
+        private val correct: Int
             get() = mines - falseNegatives //correctly flagged as mine
         val hasWon: Boolean
             get() = mines == correct && falsePositives == 0

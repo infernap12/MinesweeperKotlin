@@ -1,7 +1,6 @@
 package minesweeper
 
 
-
 fun main() {
     println("How many mines do you want on the field?")
     val board = Board(9, readInt())
@@ -28,10 +27,10 @@ fun main() {
 
 fun readInt(): Int {
     while (true) {
-        val intput = readln().toIntOrNull()
-        if (intput == null) {
+        val input = readln().toIntOrNull()
+        if (input == null) {
             println("A number please")
-        } else return intput
+        } else return input
     }
 }
 
